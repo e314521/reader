@@ -319,28 +319,28 @@
               <div class="progress-bar">
                 <el-slider
                   v-model="speechRate"
-                  :min="0.5"
-                  :max="2"
-                  :step="0.1"
+                  :min="1"
+                  :max="9"
+                  :step="1"
                   :show-tooltip="false"
                   @change="changeSpeechRate"
                 ></el-slider>
               </div>
-              <span class="setting-btn" @click="changeSpeechRate(1)">重置</span>
+              <span class="setting-btn" @click="changeSpeechRate(5)">重置</span>
             </div>
             <div class="progress">
               <span class="progress-tip">语调</span>
               <div class="progress-bar">
                 <el-slider
                   v-model="speechPitch"
-                  :min="0"
-                  :max="2"
-                  :step="0.1"
+                  :min="1"
+                  :max="9"
+                  :step="1"
                   :show-tooltip="false"
                   @change="changeSpeechPitch"
                 ></el-slider>
               </div>
-              <span class="setting-btn" @click="changeSpeechPitch(1)"
+              <span class="setting-btn" @click="changeSpeechPitch(5)"
                 >重置</span
               >
             </div>
