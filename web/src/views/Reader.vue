@@ -2089,6 +2089,9 @@ export default {
       try {
         this.skipAutoNext = true;
         window.speechSynthesis.cancel();
+		this.audio = null;
+		this.$refs.audioRef1.pause();
+		this.$refs.audioRef2.pause();
         const current = this.getCurrentParagraph();
         if (current) {
           current.className = "";
@@ -2152,6 +2155,7 @@ export default {
         this.startSpeech();
       } else {
         // 下一章
+		this.audio = null
         this.$once("showContent", () => {
           setTimeout(() => {
             this.startSpeech();
