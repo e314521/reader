@@ -2070,6 +2070,18 @@ export default {
 		this.$refs.audioRef2.src = url + encodeURI(next.innerText);
 		this.$refs.audioRef2.load()}
 	  }
+	  this.audio.play().catch((event)=>{
+		this.$message.error(
+            `朗读错误:  ${event.type || ""}  ${event.error ||
+              event.name ||
+              event.toString()}`
+          );
+		  this.audio = null
+		  setTimeout(() => {
+			this.startSpeech();
+			}, 5000);
+	  });
+	  paragraph.className = "reading";
       /*this.utterance = new SpeechSynthesisUtterance(paragraph.innerText);
 
       this.utterance.onstart = () => {
