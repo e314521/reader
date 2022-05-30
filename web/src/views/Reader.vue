@@ -267,6 +267,8 @@
             <i class="el-icon-close"></i>
           </div>
           <div class="center">
+            <audio ref="audioRef1"  @play="onPlay" @ended="onEnded"></audio>
+            <audio ref="audioRef2"  @play="onPlay" @ended="onEnded"></audio>
             <span class="ctrl-btn" @click="speechPrev">上一段</span>
             <span class="play-pause-btn" @click="toggleSpeech">
               <i
@@ -2125,6 +2127,18 @@ export default {
         this.toLastChapter();
       }
     },
+	onEnded(){
+		if (!this.skipAutoNext) {
+          this.speechNext();
+        } else {
+          this.skipAutoNext = false;
+          this.speechSpeaking = false;
+        }
+	},
+	onPlay(){
+		this.skipAutoNext = false;
+		this.speechSpeaking = true;
+	},
     speechNext() {
       if (window.speechSynthesis.speaking) {
         this.stopSpeech();
