@@ -2051,6 +2051,25 @@ export default {
         this.speechNext();
         return;
       }
+	  const next = this.getNextParagraph();
+	  let url = "https://tts.baidu.com/text2audio?cuid=baike&spd=" + this.speechRate + "&pit="+ this.speechPitch + "&lan=ZH&ctp=1&pdt=301&vol=5&rate=32&per=106&tex=";
+	  
+	  if(!this.audio){
+		this.$refs.audioRef1.src = url + encodeURI(paragraph.innerText);
+		if (next){
+			this.$refs.audioRef2.src = url + encodeURI(next.innerText);}
+		this.audio = this.$refs.audioRef1
+	  }else if(this.audio == this.$refs.audioRef1){
+		this.audio = this.$refs.audioRef2
+		if (next){
+		this.$refs.audioRef1.src = url + encodeURI(next.innerText);
+		this.$refs.audioRef1.load()}
+	  }else{
+		this.audio = this.$refs.audioRef1
+		if (next){
+		this.$refs.audioRef2.src = url + encodeURI(next.innerText);
+		this.$refs.audioRef2.load()}
+	  }
       /*this.utterance = new SpeechSynthesisUtterance(paragraph.innerText);
 
       this.utterance.onstart = () => {
