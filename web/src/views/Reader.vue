@@ -2051,7 +2051,7 @@ export default {
         this.speechNext();
         return;
       }
-      this.utterance = new SpeechSynthesisUtterance(paragraph.innerText);
+      /*this.utterance = new SpeechSynthesisUtterance(paragraph.innerText);
 
       this.utterance.onstart = () => {
         this.speechSpeaking = true;
@@ -2083,7 +2083,7 @@ export default {
       this.showParagraph(paragraph, true);
       paragraph.className = "reading";
       this.speechSpeaking = true;
-      window.speechSynthesis.speak(this.utterance);
+      window.speechSynthesis.speak(this.utterance);*/
     },
     stopSpeech() {
       try {
