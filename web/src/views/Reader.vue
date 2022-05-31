@@ -1,31 +1,16 @@
+
 <template>
-  <div
-    class="chapter-wrapper"
-    :style="bodyTheme"
-    :class="{
-      night: isNight,
-      day: !isNight,
-      'mini-interface': $store.state.miniInterface
-    }"
-    ref="chapterWrapperRef"
-  >
+  <div class="chapter-wrapper" :style="bodyTheme" :class="{
+    night: isNight,
+    day: !isNight,
+    'mini-interface': $store.state.miniInterface
+  }" ref="chapterWrapperRef">
     <div class="tool-bar" :style="leftBarTheme">
       <div class="tools">
-        <el-popover
-          placement="right"
-          :width="popperWidth"
-          trigger="click"
-          :visible-arrow="false"
-          v-model="popBookShelfVisible"
-          popper-class="popper-component"
-        >
-          <BookShelf
-            ref="popBookShelf"
-            class="popup"
-            :visible="popBookShelfVisible"
-            @changeBook="changeBook"
-            @toShelf="toShelf"
-          />
+        <el-popover placement="right" :width="popperWidth" trigger="click" :visible-arrow="false"
+          v-model="popBookShelfVisible" popper-class="popper-component">
+          <BookShelf ref="popBookShelf" class="popup" :visible="popBookShelfVisible" @changeBook="changeBook"
+            @toShelf="toShelf" />
           <div class="tool-icon" slot="reference">
             <div class="iconfont">
               &#58892;
@@ -33,21 +18,10 @@
             <div class="icon-text">书架</div>
           </div>
         </el-popover>
-        <el-popover
-          placement="right"
-          :width="popperWidth"
-          trigger="click"
-          :visible-arrow="false"
-          v-model="popBookSourceVisible"
-          popper-class="popper-component"
-        >
-          <BookSource
-            ref="popBookSource"
-            class="popup"
-            :visible="popBookSourceVisible"
-            @changeBookSource="changeBookSource()"
-            @close="popBookSourceVisible = false"
-          />
+        <el-popover placement="right" :width="popperWidth" trigger="click" :visible-arrow="false"
+          v-model="popBookSourceVisible" popper-class="popper-component">
+          <BookSource ref="popBookSource" class="popup" :visible="popBookSourceVisible"
+            @changeBookSource="changeBookSource()" @close="popBookSourceVisible = false" />
 
           <div class="tool-icon" slot="reference">
             <div class="tool-el-icon">
@@ -56,22 +30,10 @@
             <div class="icon-text">书源</div>
           </div>
         </el-popover>
-        <el-popover
-          placement="right"
-          :width="popperWidth"
-          trigger="click"
-          :visible-arrow="false"
-          v-model="popCataVisible"
-          popper-class="popper-component"
-        >
-          <PopCata
-            @getContent="getContent"
-            ref="popCata"
-            class="popup"
-            @refresh="refreshCatalog"
-            :visible="popCataVisible"
-            @close="popCataVisible = false"
-          />
+        <el-popover placement="right" :width="popperWidth" trigger="click" :visible-arrow="false"
+          v-model="popCataVisible" popper-class="popper-component">
+          <PopCata @getContent="getContent" ref="popCata" class="popup" @refresh="refreshCatalog"
+            :visible="popCataVisible" @close="popCataVisible = false" />
 
           <div class="tool-icon" slot="reference">
             <div class="iconfont">
@@ -80,21 +42,10 @@
             <div class="icon-text">目录</div>
           </div>
         </el-popover>
-        <el-popover
-          placement="right"
-          :width="popperWidth"
-          trigger="click"
-          :visible-arrow="false"
-          v-model="readSettingsVisible"
-          popper-class="popper-component"
-        >
-          <ReadSettings
-            class="popup"
-            :visible="readSettingsVisible"
-            @close="readSettingsVisible = false"
-            @showClickZone="showClickZone = true"
-            @readMethodChange="beforeReadMethodChange"
-          />
+        <el-popover placement="right" :width="popperWidth" trigger="click" :visible-arrow="false"
+          v-model="readSettingsVisible" popper-class="popper-component">
+          <ReadSettings class="popup" :visible="readSettingsVisible" @close="readSettingsVisible = false"
+            @showClickZone="showClickZone = true" @readMethodChange="beforeReadMethodChange" />
 
           <div class="tool-icon" slot="reference">
             <div class="iconfont">
@@ -103,31 +54,19 @@
             <div class="icon-text">设置</div>
           </div>
         </el-popover>
-        <div
-          class="tool-icon"
-          @click="toShelf"
-          :style="$store.state.miniInterface ? { order: -1 } : {}"
-        >
+        <div class="tool-icon" @click="toShelf" :style="$store.state.miniInterface ? { order: -1 } : {}">
           <div class="iconfont">
             &#58920;
           </div>
           <div class="icon-text">首页</div>
         </div>
-        <div
-          class="tool-icon"
-          @click="toTop(0)"
-          v-if="!$store.state.miniInterface"
-        >
+        <div class="tool-icon" @click="toTop(0)" v-if="!$store.state.miniInterface">
           <div class="iconfont">
             &#58914;
           </div>
           <div class="icon-text">顶部</div>
         </div>
-        <div
-          class="tool-icon"
-          @click="toBottom(0)"
-          v-if="!$store.state.miniInterface"
-        >
+        <div class="tool-icon" @click="toBottom(0)" v-if="!$store.state.miniInterface">
           <div class="iconfont">
             &#58915;
           </div>
@@ -137,67 +76,37 @@
     </div>
     <div class="read-bar" :style="rightBarTheme">
       <div class="float-left-btn-zone">
-        <div
-          class="float-btn"
-          :style="popupAbsoluteBtnStyle"
-          @click="showReadingBookInfo"
-        >
+        <div class="float-btn" :style="popupAbsoluteBtnStyle" @click="showReadingBookInfo">
           <i class="el-icon-info"></i>
         </div>
         <div class="float-btn" :style="popupAbsoluteBtnStyle" @click="toTop(0)">
           <i class="el-icon-top"></i>
         </div>
-        <div
-          class="float-btn"
-          :style="popupAbsoluteBtnStyle"
-          @click="toBottom(0)"
-        >
+        <div class="float-btn" :style="popupAbsoluteBtnStyle" @click="toBottom(0)">
           <i class="el-icon-bottom"></i>
         </div>
       </div>
       <div class="float-right-btn-zone">
-        <div
-          class="float-btn"
-          :style="popupAbsoluteBtnStyle"
-          @click="refreshContent"
-        >
+        <div class="float-btn" :style="popupAbsoluteBtnStyle" @click="refreshContent">
           <i class="el-icon-refresh-right"></i>
         </div>
-        <div
-          class="float-btn"
-          :style="popupAbsoluteBtnStyle"
-          @click="toggleAutoReading()"
-          v-if="!isEpub && !isCarToon && !isAudio"
-        >
+        <div class="float-btn" :style="popupAbsoluteBtnStyle" @click="toggleAutoReading()"
+          v-if="!isEpub && !isCarToon && !isAudio">
           <i class="el-icon-view"></i>
         </div>
-        <div
-          class="float-btn"
-          :style="popupAbsoluteBtnStyle"
-          @click="showReadBar = !showReadBar"
-          v-if="speechAvalable && !isEpub && !isCarToon && !isAudio"
-        >
+        <div class="float-btn" :style="popupAbsoluteBtnStyle" @click="showReadBar = !showReadBar"
+          v-if="speechAvalable && !isEpub && !isCarToon && !isAudio">
           <i class="el-icon-headset"></i>
         </div>
-        <div
-          class="float-btn"
-          :style="popupAbsoluteBtnStyle"
-          @click="toogleNight"
-        >
+        <div class="float-btn" :style="popupAbsoluteBtnStyle" @click="toogleNight">
           <i class="el-icon-moon" v-if="!isNight"></i>
           <i class="el-icon-sunny" v-else></i>
         </div>
       </div>
       <div class="progress" v-if="$store.state.miniInterface && !isAudio">
         <div class="progress-bar">
-          <el-slider
-            v-model="currentPage"
-            :min="1"
-            :max="totalPages"
-            :show-tooltip="false"
-            @change="showPage"
-            @input="progressValue = $event"
-          ></el-slider>
+          <el-slider v-model="currentPage" :min="1" :max="totalPages" :show-tooltip="false" @change="showPage"
+            @input="progressValue = $event"></el-slider>
         </div>
         <span class="progress-tip">{{ formatProgressTip() }}</span>
       </div>
@@ -205,35 +114,19 @@
         <div>
           缓存章节
         </div>
-        <div
-          class="cache-content-btn"
-          v-show="!isCachingContent"
-          @click="cahceChapterContent(50)"
-        >
+        <div class="cache-content-btn" v-show="!isCachingContent" @click="cahceChapterContent(50)">
           后面50章
         </div>
-        <div
-          class="cache-content-btn"
-          v-show="!isCachingContent"
-          @click="cahceChapterContent(100)"
-        >
+        <div class="cache-content-btn" v-show="!isCachingContent" @click="cahceChapterContent(100)">
           后面100章
         </div>
-        <div
-          class="cache-content-btn"
-          v-show="!isCachingContent"
-          @click="cahceChapterContent(true)"
-        >
+        <div class="cache-content-btn" v-show="!isCachingContent" @click="cahceChapterContent(true)">
           后面全部
         </div>
         <div class="caching-tip" v-show="isCachingContent">
           {{ cachingContentTip }}
         </div>
-        <div
-          class="caching-cancel-btn"
-          v-show="isCachingContent"
-          @click="cancelCaching"
-        >
+        <div class="caching-cancel-btn" v-show="isCachingContent" @click="cancelCaching">
           <i class="el-icon-close"></i>
         </div>
       </div>
@@ -242,11 +135,7 @@
           <span v-if="$store.state.miniInterface">阅读进度: </span>
           {{ readingProgress }}
         </div>
-        <div
-          class="tool-icon"
-          @click="toLastChapter()"
-          :style="$store.state.miniInterface ? { order: -1 } : {}"
-        >
+        <div class="tool-icon" @click="toLastChapter()" :style="$store.state.miniInterface ? { order: -1 } : {}">
           <div class="iconfont">
             &#58920;
           </div>
@@ -267,27 +156,16 @@
             <i class="el-icon-close"></i>
           </div>
           <div class="center">
-            <audio ref="audioRef1"  @play="onPlay" @ended="onEnded"></audio>
-            <audio ref="audioRef2"  @play="onPlay" @ended="onEnded"></audio>
+            <audio ref="audioRef1" @play="onPlay" @ended="onEnded"></audio>
+            <audio ref="audioRef2" @play="onPlay" @ended="onEnded"></audio>
             <span class="ctrl-btn" @click="speechPrev">上一段</span>
             <span class="play-pause-btn" @click="toggleSpeech">
-              <i
-                class="el-icon-video-pause"
-                :style="popupAbsoluteBtnStyle"
-                v-if="speechSpeaking"
-              ></i>
-              <i
-                class="el-icon-video-play"
-                :style="popupAbsoluteBtnStyle"
-                v-else
-              ></i>
+              <i class="el-icon-video-pause" :style="popupAbsoluteBtnStyle" v-if="speechSpeaking"></i>
+              <i class="el-icon-video-play" :style="popupAbsoluteBtnStyle" v-else></i>
             </span>
             <span class="ctrl-btn" @click="speechNext">下一段</span>
           </div>
-          <div
-            class="collapse-btn"
-            @click="showSpeechConfig = !showSpeechConfig"
-          >
+          <div class="collapse-btn" @click="showSpeechConfig = !showSpeechConfig">
             <i class="el-icon-bottom" v-if="showSpeechConfig"></i>
             <i class="el-icon-top" v-else></i>
           </div>
@@ -296,17 +174,9 @@
           <div class="setting-title">语音库</div>
           <div class="setting-value">
             <div class="voice-list">
-              <el-radio-group
-                v-model="voiceName"
-                size="small"
-                class="radio-group"
-              >
-                <el-radio-button
-                  class="radio-button"
-                  :label="voice.name"
-                  :key="index"
-                  v-for="(voice, index) in voiceList"
-                ></el-radio-button>
+              <el-radio-group v-model="voiceName" size="small" class="radio-group">
+                <el-radio-button class="radio-button" :label="voice.name" :key="index"
+                  v-for="(voice, index) in voiceList"></el-radio-button>
               </el-radio-group>
             </div>
           </div>
@@ -317,48 +187,25 @@
             <div class="progress">
               <span class="progress-tip">语速</span>
               <div class="progress-bar">
-                <el-slider
-                  v-model="speechRate"
-                  :min="1"
-                  :max="9"
-                  :step="1"
-                  :show-tooltip="false"
-                  @change="changeSpeechRate"
-                ></el-slider>
+                <el-slider v-model="speechRate" :min="1" :max="9" :step="1" :show-tooltip="false"
+                  @change="changeSpeechRate"></el-slider>
               </div>
               <span class="setting-btn" @click="changeSpeechRate(5)">重置</span>
             </div>
             <div class="progress">
               <span class="progress-tip">语调</span>
               <div class="progress-bar">
-                <el-slider
-                  v-model="speechPitch"
-                  :min="1"
-                  :max="9"
-                  :step="1"
-                  :show-tooltip="false"
-                  @change="changeSpeechPitch"
-                ></el-slider>
+                <el-slider v-model="speechPitch" :min="1" :max="9" :step="1" :show-tooltip="false"
+                  @change="changeSpeechPitch"></el-slider>
               </div>
-              <span class="setting-btn" @click="changeSpeechPitch(5)"
-                >重置</span
-              >
+              <span class="setting-btn" @click="changeSpeechPitch(5)">重置</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="chapter"
-      ref="content"
-      :class="chapterClass"
-      :style="chapterTheme"
-    >
-      <div
-        class="click-zone"
-        v-if="showClickZone"
-        :style="!isSlideRead ? { position: 'fixed' } : {}"
-      >
+    <div class="chapter" ref="content" :class="chapterClass" :style="chapterTheme">
+      <div class="click-zone" v-if="showClickZone" :style="!isSlideRead ? { position: 'fixed' } : {}">
         <div :style="showPrevPageStyle"><span>点击前一页</span></div>
         <div :style="showMenuZoneStyle"><span>点击显示菜单</span></div>
         <div :style="showNextPageStyle"><span>点击后一页</span></div>
@@ -367,47 +214,24 @@
       <div class="top-bar" ref="top">
         {{ $store.state.miniInterface ? title : "" }}
       </div>
-      <div
-        class="content"
-        @touchstart="handleTouchStart"
-        @touchmove="handleTouchMove"
-        @touchend="handleTouchEnd"
-        @click="handlerClick"
-      >
+      <div class="content" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
+        @click="handlerClick">
         <div class="content-inner" v-if="show">
-          <Content
-            class="book-content"
-            :title="title"
-            :content="content"
-            :showContent="show"
-            :error="error"
-            :style="contentStyle"
-            :showChapterList="showChapterList"
-            :isScrollRead="isScrollRead"
-            ref="bookContentRef"
-            @prevChapter="toLastChapter"
-            @nextChapter="toNextChapter"
-            @updateProgress="saveReadingPosition"
-            @iframeLoad="$emit('iframeLoad')"
-            @contentChange="computePages()"
-            @epubClick="eventHandler"
-            @epubLocationChange="epubLocationChangeHandler"
-            @epubClickHash="epubClickHash"
-            @epubKeydown="keydownHandler($event, true)"
-          />
+          <Content class="book-content" :title="title" :content="content" :showContent="show" :error="error"
+            :style="contentStyle" :showChapterList="showChapterList" :isScrollRead="isScrollRead" ref="bookContentRef"
+            @prevChapter="toLastChapter" @nextChapter="toNextChapter" @updateProgress="saveReadingPosition"
+            @iframeLoad="$emit('iframeLoad')" @contentChange="computePages()" @epubClick="eventHandler"
+            @epubLocationChange="epubLocationChangeHandler" @epubClickHash="epubClickHash"
+            @epubKeydown="keydownHandler($event, true)" />
         </div>
       </div>
       <div class="bottom-bar" ref="bottom">
         <span v-if="isSlideRead">{{
-          `第${currentPage}/${totalPages}页 ${readingProgress}`
+            `第${currentPage}/${totalPages}页 ${readingProgress}`
         }}</span>
         <span v-if="isSlideRead">{{ timeStr }}</span>
-        <span
-          class="bottom-btn"
-          v-if="show && !isSlideRead && !error && !isScrollRead"
-          @click="toNextChapter()"
-          >加载下一章</span
-        >
+        <span class="bottom-btn" v-if="show && !isSlideRead && !error && !isScrollRead"
+          @click="toNextChapter()">加载下一章</span>
       </div>
     </div>
   </div>
@@ -703,12 +527,12 @@ export default {
       return this.isSlideRead
         ? "slide-reader"
         : this.isEpub
-        ? "epub"
-        : this.isCarToon
-        ? "cartoon"
-        : this.isAudio
-        ? "audio"
-        : "";
+          ? "epub"
+          : this.isCarToon
+            ? "cartoon"
+            : this.isAudio
+              ? "audio"
+              : "";
     },
     chapterTheme() {
       let readingStyle = this.showReadBar
@@ -938,11 +762,11 @@ export default {
       // 两行 + 两个段间距
       return (
         this.$store.getters.config.fontSize *
-          this.$store.getters.config.lineHeight *
-          2 +
+        this.$store.getters.config.lineHeight *
+        2 +
         this.$store.getters.config.fontSize *
-          this.$store.getters.config.paragraphSpace *
-          2
+        this.$store.getters.config.paragraphSpace *
+        2
       );
     }
   },
@@ -1055,11 +879,11 @@ export default {
             params
           }),
         this.$store.state.readingBook.bookName +
-          "_" +
-          this.$store.state.readingBook.author +
-          "@" +
-          this.$store.state.readingBook.bookUrl +
-          "@chapterList"
+        "_" +
+        this.$store.state.readingBook.author +
+        "@" +
+        this.$store.state.readingBook.bookUrl +
+        "@chapterList"
       );
     },
     refreshCatalog() {
@@ -1070,24 +894,24 @@ export default {
         () =>
           Axios.get(
             this.api +
-              "/getBookContent?url=" +
-              encodeURIComponent(this.$store.state.readingBook.bookUrl) +
-              "&index=" +
-              chapterIndex +
-              (refresh ? "&refresh=1" : "") +
-              (cache ? "&cache=1" : ""),
+            "/getBookContent?url=" +
+            encodeURIComponent(this.$store.state.readingBook.bookUrl) +
+            "&index=" +
+            chapterIndex +
+            (refresh ? "&refresh=1" : "") +
+            (cache ? "&cache=1" : ""),
             {
               timeout: 30000,
               ...options
             }
           ),
         this.$store.state.readingBook.bookName +
-          "_" +
-          this.$store.state.readingBook.author +
-          "@" +
-          this.$store.state.readingBook.bookUrl +
-          "@chapterContent-" +
-          chapterIndex,
+        "_" +
+        this.$store.state.readingBook.author +
+        "@" +
+        this.$store.state.readingBook.bookUrl +
+        "@chapterContent-" +
+        chapterIndex,
         refresh
       );
     },
@@ -1321,7 +1145,7 @@ export default {
       }
       if (
         typeof this.chapterContentCache.chapters[chapter.index] ===
-          "undefined" || // 没有缓存
+        "undefined" || // 没有缓存
         !chapter.error || // 当前内容正确
         this.chapterContentCache.chapters[chapter.index].error // 缓存内容错误
       ) {
@@ -1395,7 +1219,7 @@ export default {
         {
           silent: true
         }
-      ).catch(() => {});
+      ).catch(() => { });
     },
     toTop(interval) {
       if (this.$store.state.miniInterface) {
@@ -1469,12 +1293,12 @@ export default {
       if (this.isSlideRead) {
         this.totalPages = Math.ceil(
           this.$refs.bookContentRef.$el.scrollWidth /
-            (this.windowSize.width - 16)
+          (this.windowSize.width - 16)
         );
       } else {
         this.totalPages = Math.ceil(
           this.$refs.bookContentRef.$el.scrollHeight /
-            (this.windowSize.height - this.scrollOffset)
+          (this.windowSize.height - this.scrollOffset)
         );
       }
       if (this.showLastPage) {
@@ -1515,7 +1339,7 @@ export default {
       } else {
         if (
           (document.documentElement.scrollTop || document.body.scrollTop) +
-            this.windowSize.height <
+          this.windowSize.height <
           document.documentElement.scrollHeight
         ) {
           this.currentPage += 1;
@@ -1730,11 +1554,11 @@ export default {
       if (typeof rect.top !== "undefined") {
         this.scrollContent(
           rect.top -
-            (this.$store.state.miniInterface
-              ? this.getFirstParagraphPos().bottom
-              : 0) -
-            (window.webAppDistance | 0) -
-            (this.$store.state.safeArea.top | 0),
+          (this.$store.state.miniInterface
+            ? this.getFirstParagraphPos().bottom
+            : 0) -
+          (window.webAppDistance | 0) -
+          (this.$store.state.safeArea.top | 0),
           0,
           true
         );
@@ -2051,37 +1875,41 @@ export default {
         this.speechNext();
         return;
       }
-	  const next = this.getNextParagraph();
-	  let url = "https://tts.baidu.com/text2audio?cuid=baike&spd=" + this.speechRate + "&pit="+ this.speechPitch + "&lan=ZH&ctp=1&pdt=301&vol=5&rate=32&per=106&tex=";
-	  
-	  if(!this.audio){
-		this.$refs.audioRef1.src = url + encodeURI(paragraph.innerText);
-		if (next){
-			this.$refs.audioRef2.src = url + encodeURI(next.innerText);}
-		this.audio = this.$refs.audioRef1
-	  }else if(this.audio == this.$refs.audioRef1){
-		this.audio = this.$refs.audioRef2
-		if (next){
-		this.$refs.audioRef1.src = url + encodeURI(next.innerText);
-		this.$refs.audioRef1.load()}
-	  }else{
-		this.audio = this.$refs.audioRef1
-		if (next){
-		this.$refs.audioRef2.src = url + encodeURI(next.innerText);
-		this.$refs.audioRef2.load()}
-	  }
-	  this.audio.play().catch((event)=>{
-		this.$message.error(
-            `朗读错误:  ${event.type || ""}  ${event.error ||
-              event.name ||
-              event.toString()}`
-          );
-		  this.audio = null
-		  setTimeout(() => {
-			this.startSpeech();
-			}, 5000);
-	  });
-	  paragraph.className = "reading";
+      const next = this.getNextParagraph();
+      let url = "https://tts.baidu.com/text2audio?cuid=baike&spd=" + this.speechRate + "&pit=" + this.speechPitch + "&lan=ZH&ctp=1&pdt=301&vol=5&rate=32&per=106&tex=";
+      //console.log(Date.now())
+      if (!this.audio) {
+        this.$refs.audioRef1.src = url + encodeURI(paragraph.innerText);
+        if (next) {
+          this.$refs.audioRef2.src = url + encodeURI(next.innerText);
+        }
+        this.audio = this.$refs.audioRef1
+      } else if (this.audio == this.$refs.audioRef1) {
+        this.audio = this.$refs.audioRef2
+        if (next) {
+          this.$refs.audioRef1.src = url + encodeURI(next.innerText);
+          this.$refs.audioRef1.load()
+        }
+      } else {
+        this.audio = this.$refs.audioRef1
+        if (next) {
+          this.$refs.audioRef2.src = url + encodeURI(next.innerText);
+          this.$refs.audioRef2.load()
+        }
+      }
+      //console.log(Date.now())
+      this.audio.play().catch((event) => {
+        this.$message.error(
+          `朗读错误:  ${event.type || ""}  ${event.error ||
+          event.name ||
+          event.toString()}`
+        );
+        this.audio = null
+        setTimeout(() => {
+          this.startSpeech();
+        }, 5000);
+      });
+      paragraph.className = "reading";
       /*this.utterance = new SpeechSynthesisUtterance(paragraph.innerText);
 
       this.utterance.onstart = () => {
@@ -2120,9 +1948,10 @@ export default {
       try {
         this.skipAutoNext = true;
         window.speechSynthesis.cancel();
-		this.audio = null;
-		this.$refs.audioRef1.pause();
-		this.$refs.audioRef2.pause();
+        this.audio = null;
+        this.$refs.audioRef1.pause();
+        this.$refs.audioRef2.pause();
+        this.onEnded();
         const current = this.getCurrentParagraph();
         if (current) {
           current.className = "";
@@ -2150,6 +1979,7 @@ export default {
         this.showParagraph(prev, true);
         current.className = "";
         prev.className = "reading";
+
         this.startSpeech();
       } else {
         // 上一章
@@ -2161,19 +1991,22 @@ export default {
         this.toLastChapter();
       }
     },
-	onEnded(){
-		if (!this.skipAutoNext) {
-          this.speechNext();
-        } else {
-          this.skipAutoNext = false;
-          this.speechSpeaking = false;
-        }
-	},
-	onPlay(){
-		this.skipAutoNext = false;
-		this.speechSpeaking = true;
-	},
+    onEnded() {
+      //console.log(Date.now())
+      if (!this.skipAutoNext) {
+        this.speechNext();
+      } else {
+        this.skipAutoNext = false;
+        this.speechSpeaking = false;
+      }
+    },
+    onPlay() {
+      //console.log(Date.now())
+      this.skipAutoNext = false;
+      this.speechSpeaking = true;
+    },
     speechNext() {
+      //console.log(Date.now())
       if (window.speechSynthesis.speaking) {
         this.stopSpeech();
       }
@@ -2186,7 +2019,7 @@ export default {
         this.startSpeech();
       } else {
         // 下一章
-		this.audio = null
+        this.audio = null
         this.$once("showContent", () => {
           setTimeout(() => {
             this.startSpeech();
@@ -2216,9 +2049,9 @@ export default {
             if (
               elePos.bottom >
               30 +
-                20 +
-                (window.webAppDistance | 0) +
-                (this.$store.state.safeArea.top | 0)
+              20 +
+              (window.webAppDistance | 0) +
+              (this.$store.state.safeArea.top | 0)
             ) {
               currentParagraph = list[i];
               break;
@@ -2277,11 +2110,11 @@ export default {
           const pos = paragraph.getBoundingClientRect();
           this.scrollContent(
             pos.top -
-              (this.$store.state.miniInterface
-                ? this.getFirstParagraphPos().bottom
-                : 0) -
-              (window.webAppDistance | 0) -
-              (this.$store.state.safeArea.top | 0),
+            (this.$store.state.miniInterface
+              ? this.getFirstParagraphPos().bottom
+              : 0) -
+            (window.webAppDistance | 0) -
+            (this.$store.state.safeArea.top | 0),
             0
           );
         });
@@ -2296,7 +2129,7 @@ export default {
       if (!this.isSlideRead) {
         this.currentPage = Math.round(
           (scrollTop + this.windowSize.height) /
-            (this.windowSize.height - this.scrollOffset)
+          (this.windowSize.height - this.scrollOffset)
         );
       }
       if (this.isScrollRead) {
@@ -2437,9 +2270,9 @@ export default {
         }
         setCache(
           "bookChapterProgress@" +
-            this.$store.state.readingBook.bookName +
-            "_" +
-            this.$store.state.readingBook.author,
+          this.$store.state.readingBook.bookName +
+          "_" +
+          this.$store.state.readingBook.author,
           position
         );
       } catch (error) {
@@ -2456,9 +2289,9 @@ export default {
         }
         const lastPosition = getCache(
           "bookChapterProgress@" +
-            this.$store.state.readingBook.bookName +
-            "_" +
-            this.$store.state.readingBook.author
+          this.$store.state.readingBook.bookName +
+          "_" +
+          this.$store.state.readingBook.author
         );
         if (lastPosition && +lastPosition) {
           this.$nextTick(() => {
