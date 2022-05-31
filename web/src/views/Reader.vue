@@ -1875,8 +1875,27 @@ export default {
         this.speechNext();
         return;
       }
-      const next = this.getNextParagraph();
       let url = "https://tts.baidu.com/text2audio?cuid=baike&spd=" + this.speechRate + "&pit=" + this.speechPitch + "&lan=ZH&ctp=1&pdt=301&vol=5&rate=32&per=106&tex=";
+      if (!this.audio) {
+        this.$refs.audioRef1.src = url + encodeURI(paragraph.innerText);
+        this.$refs.audioRef1.load()
+        this.audio = this.$refs.audioRef1
+      }
+       this.audio.play().catch((event) => {
+        this.$message.error(
+          `朗读错误:  ${event.type || ""}  ${event.error ||
+          event.name ||
+          event.toString()}`
+        );
+        this.audio = null
+        setTimeout(() => {
+          this.startSpeech();
+        }, 5000);
+      });
+      paragraph.className = "reading";
+      this.speechSpeaking = true;
+
+       /*const next = this.getNextParagraph();
       //console.log(Date.now())
       if (!this.audio) {
         this.$refs.audioRef1.src = url + encodeURI(paragraph.innerText);
@@ -1897,7 +1916,7 @@ export default {
           this.$refs.audioRef2.load()
         }
       }
-      //console.log(Date.now())
+      //console.log("this.audio.play",Date.now())
       this.audio.play().catch((event) => {
         this.$message.error(
           `朗读错误:  ${event.type || ""}  ${event.error ||
@@ -1910,7 +1929,7 @@ export default {
         }, 5000);
       });
       paragraph.className = "reading";
-      /*this.utterance = new SpeechSynthesisUtterance(paragraph.innerText);
+     this.utterance = new SpeechSynthesisUtterance(paragraph.innerText);
 
       this.utterance.onstart = () => {
         this.speechSpeaking = true;
@@ -1992,6 +2011,8 @@ export default {
       }
     },
     onEnded() {
+      //this.$refs.audioRef2.play()
+      
       //console.log(Date.now())
       if (!this.skipAutoNext) {
         this.speechNext();
@@ -2001,6 +2022,23 @@ export default {
       }
     },
     onPlay() {
+      const next = this.getNextParagraph();
+      if(next){
+        let url = "https://tts.baidu.com/text2audio?cuid=baike&spd=" + this.speechRate + "&pit=" + this.speechPitch + "&lan=ZH&ctp=1&pdt=301&vol=5&rate=32&per=106&tex=";
+        if(this.$refs.audioRef1 == this.audio){
+          this.audio = this.$refs.audioRef2
+        }else{
+          this.audio = this.$refs.audioRef1
+        }
+        this.audio.src = url + encodeURI(next.innerText);
+        this.audio.load();
+      }else{
+        this.audio = null;
+      }
+
+
+
+      //sleep(1000);
       //console.log(Date.now())
       this.skipAutoNext = false;
       this.speechSpeaking = true;
